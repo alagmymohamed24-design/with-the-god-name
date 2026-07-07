@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع طموح | توفير الموارد</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">طموح <span>🌱</span></div>
+    </header>
+
+    <section class="hero">
+        <h1>صمم مستقبلك بذكاء</h1>
+        <p>الإبداع ليس فقط في الفكرة، بل في كيفية الحفاظ على مواردنا.</p>
+    </section>
+
+    <section class="calc-section">
+        <div class="calc-card">
+            <h2>💡 حاسبة الوعي الطاقي</h2>
+            <p>اكتشف تأثير أجهزتك على البيئة وميزانيتك</p>
+            
+            <div class="input-group">
+                <label>قدرة الجهاز (واط):</label>
+                <input type="number" id="watts" placeholder="مثال: 100">
+            </div>
+
+            <div class="input-group">
+                <label>ساعات التشغيل يومياً:</label>
+                <input type="number" id="hours" placeholder="مثال: 8">
+            </div>
+
+            <div class="input-group">
+                <label>سعر الكيلوواط:</label>
+                <input type="number" id="price" value="0.5">
+            </div>
+
+            <button onclick="calculateEnergy()" class="btn-calc">احسب التأثير</button>
+
+            <div id="result" class="result-box"></div>
+        </div>
+    </section>
+
+    <script>
+        function calculateEnergy() {
+            const watts = document.getElementById('watts').value;
+            const hours = document.getElementById('hours').value;
+            const price = document.getElementById('price').value;
+            const resultDiv = document.getElementById('result');
+
+            if (watts > 0 && hours > 0) {
+                const kwh = (watts * hours) / 1000;
+                const cost = kwh * price;
+                
+                let feedback = "";
+                let statusClass = "";
+
+                if (kwh < 1.5) {
+                    feedback = "أداء رائع! استهلاكك منخفض وصديق للبيئة. ✨";
+                    statusClass = "low-impact";
+                } else if (kwh < 5) {
+                    feedback = "استهلاك متوسط. جرب تقليل ساعات التشغيل للوفر. ⚖️";
+                    statusClass = "med-impact";
+                } else {
+                    feedback = "استهلاك مرتفع جداً! هذا الجهاز يرهق مواردك. ⚠️";
+                    statusClass = "high-impact";
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="result-content ${statusClass}">
+                        <p>الاستهلاك: <strong>${kwh.toFixed(2)}</strong> كيلوواط/ساعة</p>
+                        <p>التكلفة اليومية: <strong>${cost.toFixed(2)}</strong> ج.م</p>
+                        <hr>
+                        <p class="feedback">${feedback}</p>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                alert("من فضلك أدخل قيم صحيحة.");
+            }
+            
+        }
+    </script>
+</body>
+</html>
